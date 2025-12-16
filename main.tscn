@@ -1,0 +1,176 @@
+[gd_scene load_steps=12 format=3 uid="uid://mainscene"]
+
+[ext_resource type="Script" uid="uid://dpirjktyb5x33" path="res://scenes/main/main.gd" id="1_tyq8r"]
+[ext_resource type="PackedScene" uid="uid://pausemenu" path="res://scenes/ui/pause_menu.tscn" id="2_pause"]
+[ext_resource type="PackedScene" uid="uid://mainmenu" path="res://scenes/ui/main_menu.tscn" id="3_mainmenu"]
+[ext_resource type="Script" uid="uid://chq4tfwa24d1q" path="res://scenes/main/snake_camera.gd" id="3_yyfjg"]
+[ext_resource type="Script" uid="uid://cwxedntvwg1wx" path="res://scenes/main/gameplay.gd" id="4_5upsq"]
+[ext_resource type="PackedScene" uid="uid://optionsmenu" path="res://scenes/ui/options_menu.tscn" id="5_options"]
+[ext_resource type="PackedScene" uid="uid://bmg65xy5c6ubo" path="res://scenes/ui/high_scores_menu.tscn" id="6_highscores"]
+[ext_resource type="PackedScene" uid="uid://bj6w0rdbd1g4b" path="res://scenes/ui/credits_screen.tscn" id="7_creditsscreen"]
+[ext_resource type="Script" uid="uid://dk17ktytlbvya" path="res://scenes/ui/ui_state_manager.gd" id="9_b1x3f"]
+[ext_resource type="Theme" uid="uid://c3mk77g6ame25" path="res://themes/snake_ui_theme.tres" id="10_theme"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a8run"]
+bg_color = Color(0.12549, 0.12549, 0.12549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.443137, 1, 0.764706, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+expand_margin_left = 6.0
+expand_margin_top = 6.0
+expand_margin_right = 6.0
+expand_margin_bottom = 6.0
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("10_theme")
+script = ExtResource("1_tyq8r")
+
+[node name="GameLayer" type="CanvasLayer" parent="."]
+layer = 0
+follow_viewport_enabled = true
+
+[node name="GameViewport" type="CenterContainer" parent="GameLayer"]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameWorld" type="Node2D" parent="GameLayer/GameViewport"]
+unique_name_in_owner = true
+process_mode = 3
+
+[node name="GameManager" type="Node2D" parent="GameLayer/GameViewport/GameWorld"]
+unique_name_in_owner = true
+script = ExtResource("4_5upsq")
+
+[node name="PlayArea" type="Node2D" parent="GameLayer/GameViewport/GameWorld"]
+unique_name_in_owner = true
+y_sort_enabled = true
+
+[node name="Background" type="Panel" parent="GameLayer/GameViewport/GameWorld/PlayArea"]
+unique_name_in_owner = true
+offset_right = 768.0
+offset_bottom = 576.0
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_a8run")
+
+[node name="Camera2D" type="Camera2D" parent="GameLayer/GameViewport/GameWorld"]
+unique_name_in_owner = true
+position = Vector2(384, 288)
+script = ExtResource("3_yyfjg")
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="Background" type="ColorRect" parent="UILayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0768358, 0.0768358, 0.0768358, 0.862745)
+
+[node name="MainMenu" parent="UILayer" instance=ExtResource("3_mainmenu")]
+
+[node name="OptionsMenu" parent="UILayer" instance=ExtResource("5_options")]
+visible = false
+
+[node name="HighScoresMenu" parent="UILayer" instance=ExtResource("6_highscores")]
+visible = false
+
+[node name="CreditsScreen" parent="UILayer" instance=ExtResource("7_creditsscreen")]
+visible = false
+
+[node name="PauseMenu" parent="UILayer" instance=ExtResource("2_pause")]
+visible = false
+
+[node name="ScoreLabel" type="Label" parent="UILayer"]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 116.0
+offset_bottom = 42.0
+text = "Score: 0"
+
+[node name="GameOverContainer" type="CenterContainer" parent="UILayer"]
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("10_theme")
+
+[node name="PanelContainer" type="PanelContainer" parent="UILayer/GameOverContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/GameOverContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/GameOverContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+focus_mode = 2
+theme_override_constants/separation = 24
+
+[node name="GameOverLabel" type="Label" parent="UILayer/GameOverContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_type_variation = &"TitleLabel"
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="UILayer/GameOverContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Final Score: 0"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="UILayer/GameOverContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+focus_neighbor_top = NodePath("../QuitButton")
+focus_neighbor_bottom = NodePath("../QuitButton")
+text = "Play Again"
+
+[node name="QuitButton" type="Button" parent="UILayer/GameOverContainer/PanelContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+focus_neighbor_top = NodePath("../RestartButton")
+focus_neighbor_bottom = NodePath("../RestartButton")
+theme_type_variation = &"QuitButton"
+text = "Quit to Menu"
+
+[node name="ButtonHints" type="HBoxContainer" parent="UILayer/GameOverContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UILayer/GameOverContainer/PanelContainer/MarginContainer/VBoxContainer/ButtonHints"]
+layout_mode = 2
+theme_type_variation = &"HintLabel"
+text = "[A] Select   [B] Back"
+horizontal_alignment = 1
+
+[node name="UIStateManager" type="Node" parent="."]
+script = ExtResource("9_b1x3f")
