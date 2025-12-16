@@ -1,42 +1,17 @@
-# A Simple Snake Game
+# Snake 
 
-A Simple Snake Game is a simple snake game in which you simply snake.
+## Коротко про гру
+Це навчальний 2D-проєкт у жанрі “Snake” (змійка).
+Мета — набирати очки, збираючи їжу, і не врізатися у себе/перешкоди.
 
-### Controls
+## Керування
+- Стрілки / WASD — рух
+- Esc — вихід (якщо є в меню)
 
-- **Movement**: Arrow keys, WASD, Gamepad, or Mouse/Touch
-- **Pause**: Space/Escape/P/or Start button
-- **Menu Navigation**: 
-  - Keyboard arrows/WASD
-  - Gamepad D-pad/stick
-  - Mouse
-- **Select**: Enter/Space/A button
-- **Back**: Escape/B button
+## Білд (Windows)
+Готовий запускний білд знаходиться у папці:
+- Sofia_Snake_Project/
+  - snake 
+  - snake.pck
 
-## Features
-
-- Multiple control schemes:
-  - Keyboard (Arrow keys or WASD)
-  - Gamepad (D-pad or analog stick)
-  - Mouse/Touch (Click/tap where you want to go)
-- Top 10 high scores system
-- Pause functionality (Space/P/Start button)
-- Full controller support with UI navigation
-- Sound toggle option
-
-### Technical Details
-
-- Audio engine supporting multiple types of waveforms (sin, square, saw)
-- Procedural color variations in the snake's tail
-- Responsive UI design
-- Save system for high scores
-- Mobile-compatible design
-- Smooth camera system
-
-### Credits
-
-Created by bluehexagons in a few days as a learning project for Copilot-assisted Godot game development and release.
-
-### MIT License
-
-Feel free to use this code as a learning resource or base for your own projects.
+Для запуску потрібно, щоб snake і snake.pck були в одній папці.
